@@ -1,60 +1,77 @@
-# Sentiment Analysis on Product Reviews
+# Sentiment Analysis using Rule-Based Thematic Approach
 
-A simple, rule-based sentiment analysis pipeline implemented in a Jupyter Notebook. This project demonstrates how to:
+## Overview
 
-- Load and preprocess a JSON Lines dataset of product reviews
-- Perform exploratory data analysis (review counts, rating distribution, review length statistics)
-- Build positive and negative word frequency lexicons via thematic analysis
-- Preprocess review text (lowercasing, punctuation removal, tokenization, stop-word filtering)
-- Apply a rule-based classifier to label each review as positive or negative
-- Save the annotated results to an output file for further analysis or reporting
+This project performs sentiment analysis on a product reviews dataset using a rule-based approach enhanced by thematic word classification. It includes data preprocessing, thematic word identification, sentiment scoring, and exporting results.
 
 ## Features
 
-- **Data Loading**: Parses each line of a JSONL file into Python objects using `json`.
-- **Exploration**: Computes basic statistics on review texts and ratings using `statistics`.
-- **Thematic Analysis**: Gathers positive and negative word counts from the corpus.
-- **Text Preprocessing**: Cleans and tokenizes text with regular expressions; removes common stop words.
-- **Sentiment Classification**: Labels reviews by comparing counts of positive vs. negative terms.
-- **Result Export**: Writes a tab-separated file of original reviews alongside predicted sentiment labels.
+* Loads and parses a large JSON-based review dataset.
+* Cleans and preprocesses review text by removing punctuation and stop words.
+* Performs thematic analysis using pre-defined positive and negative word sets.
+* Applies a rule-based sentiment classifier with weighted scores adjusted based on thematic word frequency.
+* Saves results with predicted sentiment to a text file.
 
-## Prerequisites
+## Dataset
 
-- Python 3.7 or newer
-- No external libraries beyond the standard library (`json`, `re`, `statistics`)
-- Jupyter Notebook (optional, to view and run interactively)
+* Dataset: Amazon Cell Phones and Accessories Review Dataset (JSON format)
+* Fields Used: `reviewText`, `overall`
 
-## Getting Started
+## Methodology
 
-1. **Clone the Repository**
-   ```bash
-   git clone <repository_url>
-   cd <repository_folder>
-   ```
+### 1. **Data Loading and Preprocessing**
 
-2. **Prepare the Dataset**
-   - Place your review file (one JSON object per line, with `reviewText` and `overall` fields) in the root folder, e.g. `reviews.jsonl`.
+* Extracts review text and ratings.
+* Cleans text by removing punctuation and converting to lowercase.
+* Removes common English stop words.
 
-3. **Run Interactively (Notebook)**
-   ```bash
-   jupyter notebook i222066_AyaanKhan_A0.ipynb
-   ```
+### 2. **Thematic Analysis**
 
-4. **Run as Script**
-   If you prefer, extract the code into `sentiment_analysis.py` and run:
-   ```bash
-   python sentiment_analysis.py --input reviews.jsonl --output output.txt
-   ```
+* Counts occurrences of words from predefined sets:
 
-5. **View Results**
-   - The output file (default `output.txt`) contains each review and its predicted sentiment (`positive` or `negative`).
+  * Positive Words (e.g., "awesome", "excellent", "perfect")
+  * Negative Words (e.g., "bad", "terrible", "poor")
 
-## File Structure
+### 3. **Sentiment Scoring**
+
+* Assigns weights to keywords using a dictionary.
+* Adjusts weights based on frequency from thematic analysis.
+* Computes cumulative sentiment score per review.
+* Classifies sentiment as:
+
+  * `positive` (score > 0.5)
+  * `negative` (score < -0.5)
+  * `neutral` (otherwise)
+
+### 4. **Saving Results**
+
+* Stores each review along with its predicted sentiment in an output text file.
+
+## How to Run
+
+1. Place the dataset JSON file at the specified path.
+2. Run the notebook in a Python environment with standard libraries.
+3. Output is saved in a `.txt` file containing sentiment-tagged reviews.
+
+## Sample Output
 
 ```
-├── i222066_AyaanKhan_A0.ipynb   # Main notebook with full implementation
-├── reviews.jsonl               # Input dataset (JSON Lines format)
-├── output.txt                  # Generated sentiment-labeled results
-└── README.md                   # This file
+I love this case! It's beautiful and durable. - positive
+The screen protector didn't fit at all. Waste of money. - negative
+Decent product for the price. - neutral
 ```
 
+## Technologies Used
+
+* Python 3
+* Regular Expressions (`re`)
+* JSON Parsing
+* File I/O
+
+## Author
+
+* Ayaan Khan (i222066)
+
+## License
+
+This project is for educational purposes only as part of a Big Data Analytics assignment.
